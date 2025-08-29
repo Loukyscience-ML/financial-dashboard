@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-trial_balance_df = pd.read_excel("Financial Analysis for XYZ Company – FY2025.xlsx", sheet_name="TrialBalance")
+trial_balance_df = pd.read_excel("Financial Analysis for XYZ Company – FY2025.xlsx", sheet_name="Sheet1")
 
 # Load your processed DataFrames
 # Replace with actual loading if needed
