@@ -2,49 +2,33 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Load Excel sheets
-trial_balance_df = pd.read_excel(
-    "Financial Analysis for XYZ Company – FY2025.xlsx", sheet_name="Sheet1"
-)
-dept_pnl = pd.read_excel(
-    "Financial Analysis for XYZ Company – FY2025.xlsx", sheet_name="Dept_PnL"
-)
-monthly_trend = pd.read_excel(
-    "Financial Analysis for XYZ Company – FY2025.xlsx", sheet_name="Monthly_Trends"
-)
-expense_summary = pd.read_excel(
-    "Financial Analysis for XYZ Company – FY2025.xlsx", sheet_name="Expense_Summary"
-)
+df = pd.read_excel("Financial Analysis for XYZ Company – FY2025.xlsx", sheet_name="Sheet1")
 
-# Streamlit page config
 st.set_page_config(page_title="Financial Dashboard", layout="wide")
 st.title("📊 Financial Analysis for XYZ Company – FY2025")
 
-# Section 1: Trial Balance
 st.header("Trial Balance Summary")
-st.dataframe(trial_balance_df)
+st.dataframe(df)
 
-# Section 2: Department-Level P&L
 st.header("Department Performance")
-st.dataframe(dept_pnl)
+st.dataframe(df[['Department', 'Revenue', 'Expenses', 'NetProfit']])
 
-# Section 3: Monthly Trends
 st.header("Monthly Financial Trends")
-st.line_chart(monthly_trend[["Revenue", "Expenses", "NetProfit"]])
+st.line_chart(df[['Month', 'Revenue', 'Expenses', 'NetProfit']].set_index('Month'))
 
-# Section 4: Moving Averages
 st.subheader("3-Month Moving Averages")
-st.line_chart(monthly_trend[["Revenue_MA", "Expenses_MA"]])
+df['Revenue_MA'] = df['Revenue'].rolling(3).mean()
+df['Expenses_MA'] = df['Expenses'].rolling(3).mean()
+st.line_chart(df[['Month', 'Revenue_MA', 'Expenses_MA']].set_index('Month'))
 
-# Section 5: Expense Breakdown
 st.header("Expense Breakdown by Type")
 fig, ax = plt.subplots()
-ax.bar(expense_summary["AccountName"], expense_summary["TotalExpense"], color="#1f77b4")
+expense_summary = df.groupby('AccountName')['TotalExpense'].sum().reset_index()
+ax.bar(expense_summary['AccountName'], expense_summary['TotalExpense'], color="#1f77b4")
 ax.set_ylabel("Total Expense")
 ax.set_title("Expense Breakdown")
 st.pyplot(fig)
 
-# Section 6: Key Insights
 st.header("Key Insights")
 st.markdown("""
 - Finance department leads profitability with 21.27% share  
