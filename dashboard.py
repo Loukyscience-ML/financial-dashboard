@@ -2,14 +2,22 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-trial_balance_df = pd.read_excel("Financial Analysis for XYZ Company – FY2025.xlsx", sheet_name="Sheet1")
+# Load Excel sheets
+trial_balance_df = pd.read_excel(
+    "Financial Analysis for XYZ Company – FY2025.xlsx", sheet_name="Sheet1"
+)
+dept_pnl = pd.read_excel(
+    "Financial Analysis for XYZ Company – FY2025.xlsx", sheet_name="Dept_PnL"
+)
+monthly_trend = pd.read_excel(
+    "Financial Analysis for XYZ Company – FY2025.xlsx", sheet_name="Monthly_Trends"
+)
+expense_summary = pd.read_excel(
+    "Financial Analysis for XYZ Company – FY2025.xlsx", sheet_name="Expense_Summary"
+)
 
-# Load your processed DataFrames
-# Replace with actual loading if needed
-# df = pd.read_excel("your_data.xlsx")
-
+# Streamlit page config
 st.set_page_config(page_title="Financial Dashboard", layout="wide")
-
 st.title("📊 Financial Analysis for XYZ Company – FY2025")
 
 # Section 1: Trial Balance
