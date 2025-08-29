@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
+trial_balance_df = pd.read_excel("trial_balance.xlsx")
+
 # Load your processed DataFrames
 # Replace with actual loading if needed
 # df = pd.read_excel("your_data.xlsx")
